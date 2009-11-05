@@ -15,11 +15,10 @@ class CPLLexer():
 	tokens = [
 		'COMMENT',
 		'STRING', 
-		'FIELD',
 	] + list(reserved.values())
 
 	#literals used in cpl
-	literals = ['{','}']
+	literals = ['{','}',':']
 	
 	t_ignore = " \t"
 
@@ -28,14 +27,9 @@ class CPLLexer():
 		r'//.*'
 		pass
 
-	#parse a field, i.e. A string followed by ':'
-	def t_FIELD(self, t):
-		r'[a-zA-Z][a-zA-Z0-9_]*:'
-		return t
-
 	#parse regular strings and reserved words
 	def t_STRING(self, t):
-		u'([^{}\n])+'
+		u'([^{}:\n])+'
 		t.type = self.reserved.get(t.value.upper(),'STRING')	 # Check for reserved words
 		return t
 
