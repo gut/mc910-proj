@@ -48,14 +48,9 @@ class CPLLexer():
 		t.type = self.reserved.get(t.value.upper(),'ID') # Check for reserved words
 		return t
 
-	def t_FORMATEDTEXT_COMMENT(self, t):
-		r'//.*'
-		pass
-	
-	def t_FORMATEDTEXT_FIELD(self, t):
-		r'[a-zA-Z][a-zA-Z0-9_]*:'
-		t.lexer.begin('FORMATEDTEXT')
-		return t
+	t_FORMATEDTEXT_COMMENT = t_COMMENT
+
+	t_FORMATEDTEXT_FIELD = t_FIELD
 
 	def t_FORMATEDTEXT_STRING(self, t):
 		u'([^{}\n])+'
