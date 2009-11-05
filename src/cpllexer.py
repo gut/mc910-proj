@@ -4,6 +4,9 @@
 import ply.lex as lex
 
 class CPLLexer():
+
+	states = (("FORMATEDTEXT", "inclusive"),)
+
 	#reserved strings in cpl
 	reserved = {
 		'BEGIN': 'BEGIN',
@@ -15,22 +18,46 @@ class CPLLexer():
 	tokens = [
 		'COMMENT',
 		'STRING', 
+		'FIELD', 
+		'ID', 
+		'RBRACKET'
 	] + list(reserved.values())
 
 	#literals used in cpl
-	literals = ['{','}',':']
-	
+	literals = ['{']
 	t_ignore = " \t"
 
-	#parse comments
+
+	def t_RBRACKET(self, t):
+		r'}'
+		t.lexer.begin("INITIAL")
+		return t
+
 	def t_COMMENT(self, t):
 		r'//.*'
 		pass
 
-	#parse regular strings and reserved words
-	def t_STRING(self, t):
-		u'([^{}:\n])+'
-		t.type = self.reserved.get(t.value.upper(),'STRING')	 # Check for reserved words
+	def t_FIELD(self, t):
+		r'[a-zA-Z][a-zA-Z0-9_]*:'
+		t.lexer.begin('FORMATEDTEXT')
+		return t
+
+	def t_ID(self, t):
+		r'[a-zA-Z][a-zA-Z0-9_]*'
+		t.type = self.reserved.get(t.value.upper(),'ID') # Check for reserved words
+		return t
+
+	def t_FORMATEDTEXT_COMMENT(self, t):
+		r'//.*'
+		pass
+	
+	def t_FORMATEDTEXT_FIELD(self, t):
+		r'[a-zA-Z][a-zA-Z0-9_]*:'
+		t.lexer.begin('FORMATEDTEXT')
+		return t
+
+	def t_FORMATEDTEXT_STRING(self, t):
+		u'([^{}\n])+'
 		return t
 
 	def t_newline(self, t):
