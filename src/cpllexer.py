@@ -26,7 +26,6 @@ class CPLLexer():
 	#parse comments
 	def t_COMMENT(self, t):
 		r'//.*'
-
 		pass
 
 	#parse a field, i.e. A string followed by ':'
