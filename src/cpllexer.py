@@ -34,7 +34,7 @@ class CPLLexer():
 
 	#parse regular strings and reserved words
 	def t_STRING(self, t):
-		u'.+'
+		u'([^{}\n])+'
 		t.type = self.reserved.get(t.value.upper(),'STRING')	 # Check for reserved words
 		return t
 
