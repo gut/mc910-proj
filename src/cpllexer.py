@@ -20,6 +20,8 @@ class CPLLexer():
 
 	#literals used in cpl
 	literals = ['{','}']
+	
+	t_ignore = " \t"
 
 	#parse comments
 	def t_COMMENT(self, t):
@@ -37,8 +39,6 @@ class CPLLexer():
 		u'([^{}\n])+'
 		t.type = self.reserved.get(t.value.upper(),'STRING')	 # Check for reserved words
 		return t
-
-	t_ignore = " \t"
 
 	def t_newline(self, t):
 		 r'\n+'
