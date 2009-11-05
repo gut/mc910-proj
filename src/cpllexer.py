@@ -12,6 +12,7 @@ class CPLLexer():
 		'BEGIN': 'BEGIN',
 		'END':'END',
 		'NEWSPAPER':'NEWSPAPER',
+		'STRUCTURE' : 'STRUCTURE'
 	}
 	
 	#Tokens parsed by this lexer
