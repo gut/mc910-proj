@@ -18,7 +18,7 @@ session_s : ID { fields_list }
 field_list : field_s field_list
 field_list : field_s 
 
-field_s : FIELD string_list
+field_s : FIELD string_s
 
 string_s : STRING string_s
 string_s : STRING
