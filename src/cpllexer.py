@@ -23,12 +23,13 @@ class CPLLexer():
 		'FIELD',
 		'ID',
 		'RBRACKET',
+		'LBRACKET',
 	] + list(reserved.values())
 
 	#literals used in cpl
-	literals = ['{']
+	#literals = []
+	t_LBRACKET = r'{'
 	t_ignore = " \t"
-
 
 	def t_RBRACKET(self, t):
 		r'}'
