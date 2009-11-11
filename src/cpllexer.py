@@ -12,17 +12,17 @@ class CPLLexer():
 		'BEGIN': 'BEGIN',
 		'END':'END',
 		'NEWSPAPER':'NEWSPAPER',
-		'STRUCTURE' : 'STRUCTURE'
-		'CONTENT' : 'CONTENT'
+		'STRUCTURE' : 'STRUCTURE',
+		'CONTENT' : 'CONTENT',
 	}
 	
 	#Tokens parsed by this lexer
 	tokens = [
 		'COMMENT',
-		'STRING', 
-		'FIELD', 
-		'ID', 
-		'RBRACKET'
+		'STRING',
+		'FIELD',
+		'ID',
+		'RBRACKET',
 	] + list(reserved.values())
 
 	#literals used in cpl
@@ -58,12 +58,12 @@ class CPLLexer():
 		return t
 
 	def t_newline(self, t):
-		 r'\n+'
-		 t.lexer.lineno += t.value.count("\n")
-	 
+		r'\n+'
+		t.lexer.lineno += t.value.count("\n")
+	
 	def t_error(self, t):
-		 print "Illegal character '%s'" % t.value[0]
-		 t.lexer.skip(1)
+		print "Illegal character '%s'" % t.value[0]
+		t.lexer.skip(1)
 
 	# Build the lexer
 	def build(self, **kwargs):
@@ -75,7 +75,6 @@ if __name__ == "__main__":
 	if len(sys.argv) < 2:
 		print "first argument must be the cpl file."
 		sys.exit(1)
-
 
 	# Build the lexer
 	cpllexer = CPLLexer()
