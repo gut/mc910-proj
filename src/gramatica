@@ -1,0 +1,32 @@
+#Esboco da gramatica
+
+
+statement : BEGIN content_s strutcture_s END
+
+content_s : CONTENT { content_list }
+
+
+#see if newspaper can be in other order
+content_s : newspaper_s
+content_s : session_s
+content_list : content_s content_list
+content_list : content_s
+
+newspaper_s : NEWSPAPER { fields_list }
+session_s : ID { fields_list } 
+
+field_list : field_s field_list
+field_list : field_s 
+
+field_s : FIELD string_list
+
+string_s : STRING string_s
+string_s : STRING
+
+
+
+
+
+
+structure_s : STRUCTURE
+
