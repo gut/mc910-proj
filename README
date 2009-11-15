@@ -1,0 +1,9 @@
+|-- README
+|-- files            # arquivos gerais
+|   |-- calc.py      # exemplo
+|   |-- ex.cpl       # arquivo de entrada para testes
+|   |-- exemplo.cpl  # Arquivo de entrada dado pelo professor
+`-- src
+   |-- cpllexer.py   # Lexer
+   |-- cplparser.py  # parser(análise sintática - gramatica)
+   |-- gramatica     # arquivo descrevendo a gramatica (só um esboço, não é usado no código)
