@@ -9,11 +9,19 @@ class CPLHTML():
 		self.dictionary = dictionary
 
 	def getHeader(self, d):
-		s = '<div id="header"> <h1>' + d['content']['newspaper']['title']
+		s = '<div id="header"><div id="logo"> <h1><a>' + d['content']['newspaper']['title']
 		if d['content']['newspaper'].has_key("date"):
-			s += ' <p>' + d['content']['newspaper']['date'] + '</p>'
-		s += '</div></h1>'
+			s += '</a><p>' + d['content']['newspaper']['date'] + '</p>'
+		s += '</div></h1><div id="separador"></div></div>'
 		return s
+
+	def getTable(self, d):
+		table = [
+			'<TABLE cellSpacing=0 cellPadding=8 width="1024" border=0>', #check params
+			
+
+			'</TABLE>'
+			]
 
 	def generateHTML(self):
 		d = self.dictionary
@@ -26,14 +34,9 @@ class CPLHTML():
 			'</HEAD>'
 			'<BODY>',
 			self.getHeader(d),
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
+#			self.getTable(d),
+			'</BODY>',
+			'</HTML',
 			]
 		return "\n".join(model)
 
