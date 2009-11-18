@@ -30,7 +30,7 @@ class CPLLexer():
 	] + list(reserved.values())
 
 	#literals used in cpl
-	literals = ['[', ']', '.']
+	literals = ['[', ']', '.', ':']
 	t_LBRACKET = r'{'
 	t_ignore = " \t"
 
