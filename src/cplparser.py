@@ -9,15 +9,24 @@ class CPLParser():
 		self.tokens = lexer.tokens
 
 	def p_statement_assign(self, t):
-		'statement : BEGIN content_s END'
-		#'statement : BEGIN content_s strutcture_s END'
+		#'statement : BEGIN content_s structure_s END'
+		"""statement : BEGIN content_s structure_s END
+			     | BEGIN structure_s content_s END"""
+		print t[2]
+		print t[3]
+	
+	def p_statement_assign(self, t):
+		#'statement : BEGIN content_s structure_s END'
+		"""statement : BEGIN content_s END"""
 		print t[2]
 
-
-	def p_content_structure(self, t):
-		'content_s : CONTENT LBRACKET content_list RBRACKET'
+	def p_structure_statement(self, t):
+		'structure_s : CONTENT LBRACKET RBRACKET'
 		t[0] = t[3]
 
+	def p_content_statement(self, t):
+		'content_s : CONTENT LBRACKET content_list RBRACKET'
+		t[0] = t[3]
 
 	def p_content_list (self, t):
 		"""content_list : newspaper_s content_list  
@@ -62,6 +71,7 @@ class CPLParser():
 	def p_string_def(self, t):
 		'string_s : STRING'
 		t[0] = t[1]
+
 
 	def build(self, **kwargs):
 		self.parser = yacc.yacc(module=self, **kwargs)
