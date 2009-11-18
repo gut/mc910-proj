@@ -20,6 +20,7 @@ class CPLLexer():
 	tokens = [
 		'COMMENT',
 		'STRING',
+		'NUMBER',
 		'FIELD',
 		'ID',
 		'RBRACKET',
@@ -45,6 +46,15 @@ class CPLLexer():
 		t.lexer.begin('FORMATEDTEXT')
 		return t
 
+	def t_NUMBER(self, t):
+	    r'\d+'
+	    try:
+		t.value = int(t.value)
+	    except ValueError:
+		print "Integer value too large", t.value
+		t.value = 0
+	    return t
+
 	def t_ID(self, t):
 		r'[a-zA-Z][a-zA-Z0-9_]*'
 		t.type = self.reserved.get(t.value.upper(),'ID') # Check for reserved words
@@ -53,6 +63,8 @@ class CPLLexer():
 	t_FORMATEDTEXT_COMMENT = t_COMMENT
 
 	t_FORMATEDTEXT_FIELD = t_FIELD
+
+	t_FORMATEDTEXT_NUMBER = t_NUMBER
 
 	def t_FORMATEDTEXT_STRING(self, t):
 		u'([^{}\n])+'

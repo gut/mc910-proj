@@ -56,6 +56,10 @@ class CPLParser():
 		"string_s : STRING string_s"
 		t[0] = t[1] + '\n' + t[2]
 
+	def p_staring_number_statement(self, t):
+		"string_s : NUMBER STRING"
+		t[0] = str(t[1]) + ' ' + t[2]
+
 	def p_string_def(self, t):
 		'string_s : STRING'
 		t[0] = t[1]
