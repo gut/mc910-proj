@@ -16,13 +16,18 @@ class CPLHTML():
 		return s
 
 	def getNews(self, d, news):
-		return "asd"
+		result = []
+		for n in news:
+			result.append("<p>")
+			result.append(d['content'][n[0]][n[1]])
+			result.append("</p>")
+		return "\n".join(result)
 
 	def getTable(self, d):
 		num_cols = d["structure"]["format"]["col"]
 		current_col = 0
 		table = []
-		table.append('<TABLE cellSpacing=0 cellPadding=8 width="1024" border=0>')
+		table.append('<TABLE cellSpacing=0 cellPadding=8 width="1024" border=1>')
 
 		table.append("<TR>")
 		#add the news 
@@ -30,8 +35,6 @@ class CPLHTML():
 		for news in d["structure"]["items"]:
 			start_col = news["col_range"][0]-1 #here cols starts in 0
 			end_col = news["col_range"][1]-1
-			print start_col
-			print end_col
 			#fix col range
 			if end_col > num_cols:
 				end_en = num_cols
@@ -40,7 +43,9 @@ class CPLHTML():
 			if end_col < start_col:
 				end_col = start_col
 			cols = end_col - start_col + 1
-			if current_col + cols > num_cols:
+			if start_col < current_col:
+				if current_col < num_cols:
+					table.append("<td colspan='" + str(num_cols - current_col) + "'></td>")
 				#add new line
 				table.append("</TR>")
 				table.append("<TR>")
@@ -48,9 +53,10 @@ class CPLHTML():
 
 			if current_col != start_col:
 				table.append('<td colspan="' + str(start_col - current_col) + '"></td>')
-			table.append('<td colspan="' + str(end_col - start_col + 1) + '">')
-			table.append(self.getNews(d, news))
+			table.append('<td colspan="' + str(cols) + '">')
+			table.append(self.getNews(d, news['item_content']))
 			table.append('</td>')
+			current_col += cols
 
 		table.append('</TABLE>')
 
