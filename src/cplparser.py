@@ -10,10 +10,8 @@ class CPLParser():
 
 	def p_statement_assign(self, t):
 		#'statement : BEGIN content_s structure_s END'
-		"""statement : BEGIN content_s structure_s END
-			     | BEGIN structure_s content_s END"""
-		print t[2]
-		print t[3]
+		"""statement : BEGIN content_s structure_s END"""
+		t[0] = {'content' : t[2], 'structure' : t[3]}
 	
 #	def p_statement_assign(self, t):
 		#Statement for tests only
@@ -135,6 +133,6 @@ if __name__ == "__main__":
 	cplparser = CPLParser(cpllexer)
 	cplparser.build()
 	f=open(sys.argv[1])
-	cplparser.parser.parse(f.read())
+	print cplparser.parser.parse(f.read())
 	f.close()
 
