@@ -39,8 +39,7 @@ class CPLParser():
 
 	def p_item_content_list(self,t):
 		'item_content_list : item_content_s item_content_list'
-		t[0] = t[2]
-		t[2].append(t[1])
+		t[0] = [t[1]] + t[2]
 
 	def p_item_content_list2(self, t):
 		'item_content_list : item_content_s'
