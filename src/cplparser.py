@@ -15,7 +15,8 @@ class CPLParser():
 	
 	def p_structure_statement(self, t):
 		'structure_s : STRUCTURE LBRACKET format_s item_list RBRACKET'
-		t[0] = (t[3], t[4])
+		t[0] = t[3]
+		t[0]["items"] = t[4]
 
 	def p_format_s(self, t):
 		'format_s : FORMAT LBRACKET field_list RBRACKET'
@@ -23,8 +24,8 @@ class CPLParser():
 
 	def p_item_list(self,t):
 		'item_list : item_s item_list'
-		t[0] = t[2]
-		t[0].append(t[1])
+		t[0] = [t[1]] + t[2]
+#		t[0].append(t[1])
 	
 	def p_item_list2(self,t):
 		'item_list : item_s'
@@ -129,8 +130,6 @@ if __name__ == "__main__":
 	cplparser.build()
 	f=open(sys.argv[1])
 	d = cplparser.parser.parse(f.read())
-	from cplhtml import CPLHTML
-	cplhtml = CPLHTML(d)
-	print cplhtml.generateHTML()
+	print d
 	f.close()
 
