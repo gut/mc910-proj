@@ -15,14 +15,54 @@ class CPLParser():
 		print t[2]
 		print t[3]
 	
-	def p_statement_assign(self, t):
-		#'statement : BEGIN content_s structure_s END'
-		"""statement : BEGIN content_s END"""
-		print t[2]
+#	def p_statement_assign(self, t):
+		#Statement for tests only
+#		"""statement : BEGIN content_s END"""
+#		print t[2]
 
 	def p_structure_statement(self, t):
-		'structure_s : CONTENT LBRACKET RBRACKET'
-		t[0] = t[3]
+		'structure_s : STRUCTURE LBRACKET format_s item_list RBRACKET'
+		t[0] = (t[3], t[4])
+
+	def p_format_s(self, t):
+		'format_s : FORMAT LBRACKET field_list RBRACKET'
+		t[0] = {t[1]: t[3]}
+
+	def p_item_list(self,t):
+		'item_list : item_s item_list'
+		t[0] = t[2]
+		t[0].append(t[1])
+	
+	def p_item_list2(self,t):
+		'item_list : item_s'
+		t[0] = [t[1]]
+
+	def p_item_s(self,t):
+		"item_s : ITEM col_range_s LBRACKET item_content_list RBRACKET"
+		t[0] = {}
+		t[0]['col_range'] = t[2]
+		t[0]['item_content'] = t[4]
+
+	def p_item_content_list(self,t):
+		'item_content_list : item_content_s item_content_list'
+		t[0] = t[2]
+		t[2].append(t[1])
+
+	def p_item_content_list2(self, t):
+		'item_content_list : item_content_s'
+		t[0] = [t[1]]
+
+	def p_item_content_s(self, t):
+		"item_content_s : ID '.' ID"
+		t[0] = (t[1], t[3])
+
+	def p_col_range_s(self,t):
+		"col_range_s : '[' NUMBER ']'"
+		t[0]=(t[2], t[2])
+
+	def p_col_range_s2(self,t):
+		"col_range_s : '[' NUMBER ':' NUMBER ']'"
+		t[0]=(t[2], t[4])
 
 	def p_content_statement(self, t):
 		'content_s : CONTENT LBRACKET content_list RBRACKET'
@@ -58,6 +98,10 @@ class CPLParser():
 
 	def p_field_statement (self, t):
 		'field_s : FIELD string_s'
+		t[0] = {t[1][:-2] : t[2]}
+
+	def p_field_statement_number (self, t):
+		'field_s : FIELD NUMBER'
 		t[0] = {t[1][:-2] : t[2]}
 
 	def p_string_statement(self, t):
