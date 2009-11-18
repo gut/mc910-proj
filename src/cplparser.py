@@ -30,7 +30,6 @@ class CPLParser():
 				| session_s"""
 		t[0] = t[1]
 
-
 	def p_newspaper_statement(self, t):
 		'newspaper_s : NEWSPAPER LBRACKET field_list RBRACKET'
 		t[0] = {t[1]: t[3]}

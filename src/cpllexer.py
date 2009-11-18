@@ -25,12 +25,14 @@ class CPLLexer():
 		'ID',
 		'RBRACKET',
 		'LBRACKET',
+		'DOT',
 	] + list(reserved.values())
 
 	#literals used in cpl
 	#literals = []
 	t_LBRACKET = r'{'
 	t_ignore = " \t"
+	t_DOT = "."
 
 	def t_RBRACKET(self, t):
 		r'}'
