@@ -13,11 +13,6 @@ class CPLParser():
 		"""statement : BEGIN content_s structure_s END"""
 		t[0] = {'content' : t[2], 'structure' : t[3]}
 	
-#	def p_statement_assign(self, t):
-		#Statement for tests only
-#		"""statement : BEGIN content_s END"""
-#		print t[2]
-
 	def p_structure_statement(self, t):
 		'structure_s : STRUCTURE LBRACKET format_s item_list RBRACKET'
 		t[0] = (t[3], t[4])
@@ -133,6 +128,9 @@ if __name__ == "__main__":
 	cplparser = CPLParser(cpllexer)
 	cplparser.build()
 	f=open(sys.argv[1])
-	print cplparser.parser.parse(f.read())
+	d = cplparser.parser.parse(f.read())
+	from cplhtml import CPLHTML
+	cplhtml = CPLHTML(d)
+	print cplhtml.generateHTML()
 	f.close()
 
