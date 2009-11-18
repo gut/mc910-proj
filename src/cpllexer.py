@@ -14,6 +14,8 @@ class CPLLexer():
 		'NEWSPAPER':'NEWSPAPER',
 		'STRUCTURE' : 'STRUCTURE',
 		'CONTENT' : 'CONTENT',
+		'FORMAT' : 'FORMAT',
+		'ITEM' : 'ITEM',
 	}
 	
 	#Tokens parsed by this lexer
