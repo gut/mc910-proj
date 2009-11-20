@@ -19,7 +19,10 @@ class CPLHTML():
 		result = []
 		for n in news:
 			result.append("<p>")
-			result.append(d['content'][n[0]][n[1]])
+			if n[1] == 'image':
+				result.append('<img src="%s"></img>' % d['content'][n[0]][n[1]].strip())
+			else:
+				result.append(d['content'][n[0]][n[1]])
 			result.append("</p>")
 		return "\n".join(result)
 
