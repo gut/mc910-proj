@@ -49,13 +49,13 @@ class CPLLexer():
 		return t
 
 	def t_NUMBER(self, t):
-	    r'\d+'
-	    try:
-		t.value = int(t.value)
-	    except ValueError:
-		print "Integer value too large", t.value
-		t.value = 0
-	    return t
+		r'\d+'
+		try:
+			t.value = int(t.value)
+		except ValueError:
+			print "Integer value too large", t.value
+			t.value = 0
+		return t
 
 	def t_ID(self, t):
 		r'[a-zA-Z][a-zA-Z0-9_]*'
