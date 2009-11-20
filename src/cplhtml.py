@@ -92,14 +92,19 @@ if __name__ == "__main__":
 		print "first argument must be the cpl file."
 		sys.exit(1)
 
+	f=open(sys.argv[1])
+	cpl_file = f.read()
+	f.close()
+
 	# Build the lexer
 	cpllexer = CPLLexer()
 	cpllexer.build()
 	cplparser = CPLParser(cpllexer)
 	cplparser.build()
-	f=open(sys.argv[1])
-	d = cplparser.parser.parse(f.read())
-	cplhtml = CPLHTML(d)
-	print cplhtml.generateHTML()
-	f.close()
+	d = cplparser.parser.parse(cpl_file)
+	if not d:
+		print "Parsing failed!"
+	else:
+		cplhtml = CPLHTML(d)
+		print cplhtml.generateHTML()
 
