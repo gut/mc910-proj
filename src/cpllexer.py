@@ -70,6 +70,7 @@ class CPLLexer():
 
 	def t_FORMATEDTEXT_STRING(self, t):
 		u'([^{}\n])+'
+		t.value = t.value.strip()
 		return t
 
 	def t_newline(self, t):
