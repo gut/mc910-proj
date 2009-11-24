@@ -19,7 +19,7 @@ content {
 	//Campos opcionais:
 	//   --date: data do jornal
 	newspaper{ 
-		title: SEMPRE ONLINE. O jornal em tempo real
+		title: SEMPRE ONLINE. O jornal em tempo real.
 		date: 27 de Outubro de 2009
 	}
 
@@ -87,6 +87,7 @@ content {
 		abstract: 
 		O presidente nacional do PSDB, senador Sérgio Guerra (PSDB-PE), afirmou neste domingo que o partido mantém as discussões para a realização de uma consulta interna a fim de escolher o candidato do partido que disputará a Presidência em 2010.
 
+		author:Teste
 		text:
 O presidente nacional do PSDB, senador Sérgio Guerra (PSDB-PE), afirmou neste domingo que o partido mantém as discussões para a realização de uma consulta interna a fim de escolher o candidato do partido que disputará a Presidência em 2010.  Ele diz que os governadores Aécio Neves (PSDB) e José Serra (PSDB) --os presidenciáveis tucanos para 2010--ainda buscam um entendimento e que existe a possibilidade de os dois formarem uma "chapa pura". "O que está certo é que os dois vão colaborar ao longo desse semestre e do próximo semestre. E, se não tiver acordo, em janeiro ou em fevereiro tem prévias. Mas ainda não há nenhuma composição desse tipo", afirmou o senador. 
 	
@@ -95,7 +96,11 @@ O presidente nacional do PSDB, senador Sérgio Guerra (PSDB-PE), afirmou neste d
 
 	Noticia3{
 		title: Xuxa troca Som Livre por Sony
+
 		image: ./xuxa.jpg  
+
+		date: 27/10
+
 		abstract: 
 	
 		A gravadora, que acompanha a "rainha dos baixinhos" há 23 anos, será trocada pela Sony Music, 
@@ -121,6 +126,7 @@ structure {
 		headline1.image //Mostra o campo image do objeto headline1 neste item
 		//Mostra o campo abstract do objeto headline1 neste item
 		headline1.abstract 
+		headline1.author
 	}
 	
 	//define um item que ocupará espaço apenas da coluna 1.
@@ -135,6 +141,7 @@ structure {
 		Noticia3.title
 		Noticia3.source
 		Noticia3.image
+		Noticia3.date
 		Noticia3.abstract
 	}
 
