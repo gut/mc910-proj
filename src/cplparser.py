@@ -92,7 +92,7 @@ class CPLParser():
 
 	def p_field_statement (self, t):
 		'field_s : FIELD string_s'
-		t[0] = {t[1][:-2] : t[2]}
+		t[0] = {t[1][:t[1].rfind(":")] : t[2]}
 
 	def p_field_statement_number (self, t):
 		'field_s : FIELD NUMBER'

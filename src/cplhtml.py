@@ -19,8 +19,16 @@ class CPLHTML():
 		result = []
 		for n in news:
 			result.append("<p>")
-			if n[1] == 'image':
-				result.append('<img src="%s"></img>' % d['content'][n[0]][n[1]])
+			if n[1] == 'title':
+				result.append('<H2>%s</H2>' % d['content'][n[0]][n[1]])
+			elif n[1] == 'image':
+				result.append('<div id="figura"><img src="%s"></img></div>' % d['content'][n[0]][n[1]])
+			elif n[1] == 'source':
+				result.append('<B>Fonte: </B> <a href="%s" target="_blank">%s</a>' % (d['content'][n[0]][n[1]], d['content'][n[0]][n[1]]))
+			elif n[1] == 'author':
+				result.append('<B>Autor: </B> %s' % d['content'][n[0]][n[1]])
+			elif n[1] == 'date':
+				result.append('<B>Data: </B> %s' % d['content'][n[0]][n[1]])
 			else:
 				result.append(d['content'][n[0]][n[1]])
 			result.append("</p>")
