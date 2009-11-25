@@ -44,7 +44,7 @@ class CPLLexer():
 		pass
 
 	def t_FIELD(self, t):
-		r'[a-zA-Z][a-zA-Z0-9_]*:[ ]+'
+		r'[a-zA-Z][a-zA-Z0-9_]*:[ \n]+'
 		t.lexer.begin('FORMATEDTEXT')
 		return t
 
