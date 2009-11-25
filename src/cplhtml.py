@@ -76,7 +76,7 @@ class CPLHTML():
 	def generateHTML(self):
 		d = self.dictionary
 		model = [
-			'<HTML>', 
+			'<HTML>',
 			'<HEAD> <meta http-equiv="content-type" content="text/html; charset=utf-8" />'
 			'<TITLE>' + d['content']['newspaper']['title'] + '</TITLE>',
 			'<link rel="stylesheet" type="text/css" href="style/style.css" media="screen" />',
