@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import ply.yacc as yacc
+from color import *
 
 class CPLParser():
 	def __init__(self, lexer):
@@ -113,24 +114,30 @@ class CPLParser():
 	def build(self, **kwargs):
 		self.parser = yacc.yacc(module=self, **kwargs)
 
-def printDictList(d, lvl = 0):
+def printDictList(d, color = lambda x : x, lvl = 0):
 	"Auxiliar for printing complex structures like list and dictionaries"
 	ret = []
 	lvl_string = '  '
 	if type(d) is dict:
 		ret.append('%s{' % (lvl*lvl_string))
 		for i in d.iteritems():
-			ret.append('%s%s : %s' % ((lvl+1)*lvl_string, i[0], printDictList(i[1], lvl + 1)))
+			ret.append('%s%s : %s' % ((lvl+1)*lvl_string, green(i[0]), printDictList(i[1], color, lvl + 1)))
 		ret.append('%s}' % (lvl*lvl_string))
 		return '\n'.join(ret)
 	elif type(d) is list:
 		ret.append('%s[' % (lvl*lvl_string))
-		for l in [printDictList(i, lvl + 1) for i in d]:
+		for l in [printDictList(i, color, lvl + 1) for i in d]:
 			ret.append('%s%s' % ((lvl+1)*lvl_string, l))
 		ret.append('%s]' % (lvl*lvl_string))
 		return '\n'.join(ret)
+	elif type(d) is tuple:
+		ret.append('%s(' % (lvl*lvl_string))
+		for l in [printDictList(i, color, lvl + 1) for i in d]:
+			ret.append('%s%s' % ((lvl+1)*lvl_string, l))
+		ret.append('%s)' % (lvl*lvl_string))
+		return '\n'.join(ret)
 	else:
-		return str(d)
+		return color(str(d))
 
 if __name__ == "__main__":
 	"""Runs a small test with the parser"""
@@ -148,6 +155,9 @@ if __name__ == "__main__":
 	cplparser.build()
 	f=open(sys.argv[1])
 	d = cplparser.parser.parse(f.read())
-	print printDictList(d)
+	print yellow('Content')
+	print printDictList(d['content'], color = white)
+	print yellow('Structure')
+	print printDictList(d['structure'], color = white)
 	f.close()
 
