@@ -21,7 +21,8 @@ class CPLHTML():
 
 	def getWindowHTML (self, title, text):
 		html = ["<HTML><BODY>",
-			"<link rel='stylesheet' type='text/css' href='styleJanelas.css' />",
+			"<HEAD><link rel='stylesheet' type='text/css' href='styleJanelas.css' /></HEAD>",
+			"<CENTER><H2>" + title + "</H2></CENTER>"
 	#		self.removeLineBreaksAndSingleQuotes(text),
 			text,
 			"</BODY></HTML>"
@@ -36,7 +37,7 @@ class CPLHTML():
 			if n[1] == 'title':
 				if d['content'][n[0]].has_key("text"):
 					result.append('<a href="#" onClick="open_window(\'' + 
-					self.getWindowHTML(d['content'][n[0]]['title'], 
+					self.getWindowHTML(d['content'][n[0]].get('title', ''), 
 							d['content'][n[0]]['text'])  + 
 					
 					'\')">')
