@@ -17,13 +17,14 @@ class CPLHTML():
 
 	def removeLineBreaksAndSingleQuotes(self, string):
 		string = string.replace("\n", "123")
-		return string.replace("'", "\\'")
+		string = string.replace("'", "\\'")
+		string = string.replace('"', "\\'")
+		return string
 
 	def getWindowHTML (self, title, text):
 		html = ["<HTML><BODY>",
 			"<HEAD><link rel='stylesheet' type='text/css' href='styleJanelas.css' /></HEAD>",
 			"<CENTER><H2>" + title + "</H2></CENTER>",
-	#		self.removeLineBreaksAndSingleQuotes(text),
 			text,
 			"</BODY></HTML>"
 			]
