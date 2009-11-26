@@ -79,7 +79,7 @@ class CPLHTML():
 			'<HTML>',
 			'<HEAD> <meta http-equiv="content-type" content="text/html; charset=utf-8" />'
 			'<TITLE>' + d['content']['newspaper']['title'] + '</TITLE>',
-			'<link rel="stylesheet" type="text/css" href="style/style.css" media="screen" />',
+			'<link rel="stylesheet" type="text/css" href="style.css" media="screen" />',
 			'<script type= "text/javascript"> </script>',
 			'</HEAD>'
 			'<BODY>',
@@ -92,7 +92,7 @@ class CPLHTML():
 
 if __name__ == "__main__":
 	"""Runs a small test with the htmlgenerator"""
-	import sys
+	import sys,os
 	from cpllexer import CPLLexer
 	from cplparser import CPLParser
 
@@ -114,5 +114,14 @@ if __name__ == "__main__":
 		print "Parsing failed!"
 	else:
 		cplhtml = CPLHTML(d)
-		print cplhtml.generateHTML()
+	
+	absolute_cpl_file_path = os.path.realpath(sys.argv[1])
+	absolute_file_root = '.'.join(absolute_cpl_file_path.split('.')[:-1])  # removing extension
+	html_file = '%s.html' % absolute_file_root
+	handle = open(html_file, 'w')
+	handle.write(cplhtml.generateHTML())
+	handle.close()
+
+	print 'Html file saved on "%s"' % html_file
+
 
