@@ -37,12 +37,18 @@ class CPLParser():
 		t[0]['item_content'] = t[4]
 
 	def p_item_content_list(self,t):
-		'item_content_list : item_content_s item_content_list'
+		'''item_content_list : item_content_s item_content_list
+				| item_content_window_s item_content_list'''
 		t[0] = [t[1]] + t[2]
 
 	def p_item_content_list2(self, t):
-		'item_content_list : item_content_s'
+		'''item_content_list : item_content_s
+			| item_content_window_s'''
 		t[0] = [t[1]]
+
+	def p_item_content_window_s (self, t):
+		"item_content_window_s : ID '.' ID '.' ID"
+		t[0] = (t[1], t[3], t[5])
 
 	def p_item_content_s(self, t):
 		"item_content_s : ID '.' ID"

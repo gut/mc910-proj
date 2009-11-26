@@ -3,8 +3,6 @@
 
 class CPLHTML():
 
-
-
 	def __init__(self, dictionary):
 		self.dictionary = dictionary
 
@@ -21,44 +19,65 @@ class CPLHTML():
 		string = string.replace('"', "\\'")
 		return string
 
-	def getWindowHTML (self, title, text):
+	def getWindowHTML (self, content):
 		html = ["<HTML><BODY>",
 			"<HEAD><link rel='stylesheet' type='text/css' href='styleJanelas.css' /></HEAD>",
-			"<CENTER><H2>" + title + "</H2></CENTER>",
-			text,
+			content,
 			"</BODY></HTML>"
 			]
 
 		return self.removeLineBreaksAndSingleQuotes("".join(html))
 
+	def getTitle(self, n, news): 
+		#if there is a field 'text'
+		#or if there is an item window inside this news
+		if d['content'][n[0]].has_key("text") or [i for i in news if i[0] == 'window'] != []: 
+			window_content = []
+			for l in news:
+				if l[0] == 'window':
+					if l[2] == 'title':
+						l2 = 'title_window' #avoid link in a title in a window
+					else:
+						l2 = l[2] 
+					window_content.append(self.getHTMLTagFromNews((l[1],l2), news))
+
+			#if there is no description of window's content
+			#the default form will be used.
+			if window_content == []:
+				window_content.append(self.getHTMLTagFromNews((n[0], 'title_window'), news))
+				window_content.append(self.getHTMLTagFromNews((n[0], 'text'), news))
+			window_content = self.getWindowHTML("".join(window_content))
+			return '<a href="#" onClick="open_window(\'' + window_content + '\')">' + self.getHTMLTagFromNews((n[0], 'title_window'), news) + "</a>"
+		else:
+			return self.getHTMLTagFromNews((n[0], 'title_window'), news)
+
+
+	def getHTMLTagFromNews(self, n, news):
+		if n[1] == 'title':
+			return "<p>" + self.getTitle(n,news) + '</p>'
+		elif n[1] == 'title_window':
+			return "<p>" + '<H2>%s</H2>' % d['content'][n[0]]['title'] + '</p>'
+		elif n[1] == 'image':
+			return "<p>" + '<div id="figura"><img class="escala" src="%s"></img></div>' % d['content'][n[0]].get(n[1], '') + '</p>'
+		elif n[1] == 'full_image':
+			return "<p>" + '<center><img src="%s"></img></center>' % d['content'][n[0]].get(n[1], '') + '</p>'
+		elif n[1] == 'source':
+			return "<p>" + '<br><B>Fonte: </B> <a href="%s" target="_blank">%s</a>' % (d['content'][n[0]].get(n[1], ''), d['content'][n[0]].get(n[1])) + '</p>'
+		elif n[1] == 'author':
+			return "<p>" + '<br><B>Autor: </B> %s' % d['content'][n[0]].get(n[1], '') + '</p>'
+		elif n[1] == 'date':
+			return "<p>" + '<br><B>Data: </B> %s' % d['content'][n[0]].get(n[1]) + '</p>'
+		else:
+			return "<p>" + d['content'][n[0]].get(n[1]) + '</p>'
+		
+
 	def getNews(self, d, news):
 		result = []
 		for n in news:
-			result.append("<p>")
-			if n[1] == 'title':
-				if d['content'][n[0]].has_key("text"):
-					result.append('<a href="#" onClick="open_window(\'' + 
-					self.getWindowHTML(d['content'][n[0]].get('title', ''), 
-							d['content'][n[0]]['text'])  + 
-					
-					'\')">')
+			if n[0] == 'window':
+				continue
 
-				result.append('<H2>%s</H2>' % d['content'][n[0]][n[1]])
-				if d['content'][n[0]].has_key("text"):
-					result.append("</a>")
-			elif n[1] == 'image':
-				result.append('<div id="figura"><img class="escala" src="%s"></img></div>' % d['content'][n[0]].get(n[1], ''))
-			elif n[1] == 'full_image':
-				result.append('<center><img src="%s"></img></center>' % d['content'][n[0]].get(n[1], ''))
-			elif n[1] == 'source':
-				result.append('<br><B>Fonte: </B> <a href="%s" target="_blank">%s</a>' % (d['content'][n[0]].get(n[1], ''), d['content'][n[0]].get(n[1])))
-			elif n[1] == 'author':
-				result.append('<br><B>Autor: </B> %s' % d['content'][n[0]].get(n[1], ''))
-			elif n[1] == 'date':
-				result.append('<br><B>Data: </B> %s' % d['content'][n[0]].get(n[1]))
-			else:
-				result.append(d['content'][n[0]].get(n[1]))
-			result.append("</p>")
+			result.append(self.getHTMLTagFromNews(n, news))
 		return "\n".join(result)
 
 	def getTable(self, d):
