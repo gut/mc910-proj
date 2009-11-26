@@ -22,7 +22,7 @@ class CPLHTML():
 	def getWindowHTML (self, title, text):
 		html = ["<HTML><BODY>",
 			"<HEAD><link rel='stylesheet' type='text/css' href='styleJanelas.css' /></HEAD>",
-			"<CENTER><H2>" + title + "</H2></CENTER>"
+			"<CENTER><H2>" + title + "</H2></CENTER>",
 	#		self.removeLineBreaksAndSingleQuotes(text),
 			text,
 			"</BODY></HTML>"
