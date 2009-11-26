@@ -111,7 +111,7 @@ O presidente nacional do PSDB, senador Sérgio Guerra (PSDB-PE), afirmou neste d
 		O contrato inicial assinado com a Sony é de dois anos. 
 	
 		source: http://www.folhaOnLine.com
-		teste: joao peres
+		campo_novo: Teste de campo novo que pode ser exibido na mensagem ou na janela.
 	}
 
 	Coluna1 {
@@ -178,6 +178,7 @@ structure {
 		window.Noticia3.source
 		window.Noticia3.abstract
 		window.Noticia3.full_image
+		window.Noticia3.campo_novo
 	}
 	item[3]{
 		Coluna2.title
