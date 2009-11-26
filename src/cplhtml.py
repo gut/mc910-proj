@@ -16,7 +16,7 @@ class CPLHTML():
 		return s
 
 	def removeLineBreaksAndSingleQuotes(self, string):
-		string = string.replace("\n", "123")
+		string = string.replace("\n", "\\n")
 		string = string.replace("'", "\\'")
 		string = string.replace('"', "\\'")
 		return string
@@ -48,6 +48,8 @@ class CPLHTML():
 					result.append("</a>")
 			elif n[1] == 'image':
 				result.append('<div id="figura"><img class="escala" src="%s"></img></div>' % d['content'][n[0]][n[1]])
+			elif n[1] == 'full_image':
+				result.append('<img class="escala" src="%s"></img>' % d['content'][n[0]][n[1]])
 			elif n[1] == 'source':
 				result.append('<B>Fonte: </B> <a href="%s" target="_blank">%s</a>' % (d['content'][n[0]][n[1]], d['content'][n[0]][n[1]]))
 			elif n[1] == 'author':
@@ -63,7 +65,7 @@ class CPLHTML():
 		num_cols = d["structure"]["format"]["col"]
 		current_col = 0
 		table = []
-		table.append('<TABLE cellSpacing=0 cellPadding=8 width="1024" border=1>')
+		table.append('<TABLE cellSpacing=0 cellPadding=8 width="1024" border=0>')
 
 		table.append("<TR>")
 		for i in range(num_cols):
