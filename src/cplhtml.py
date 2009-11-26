@@ -15,12 +15,35 @@ class CPLHTML():
 		s += '</div></h1><div id="separador"></div></div>'
 		return s
 
+	def removeLineBreaksAndSingleQuotes(self, string):
+		string = string.replace("\n", "123")
+		return string.replace("'", "\\'")
+
+	def getWindowHTML (self, title, text):
+		html = ["<HTML><BODY>",
+			"<link rel='stylesheet' type='text/css' href='styleJanelas.css' />",
+	#		self.removeLineBreaksAndSingleQuotes(text),
+			text,
+			"</BODY></HTML>"
+			]
+
+		return self.removeLineBreaksAndSingleQuotes("".join(html))
+
 	def getNews(self, d, news):
 		result = []
 		for n in news:
 			result.append("<p>")
 			if n[1] == 'title':
+				if d['content'][n[0]].has_key("text"):
+					result.append('<a href="#" onClick="open_window(\'' + 
+					self.getWindowHTML(d['content'][n[0]]['title'], 
+							d['content'][n[0]]['text'])  + 
+					
+					'\')">')
+
 				result.append('<H2>%s</H2>' % d['content'][n[0]][n[1]])
+				if d['content'][n[0]].has_key("text"):
+					result.append("</a>")
 			elif n[1] == 'image':
 				result.append('<div id="figura"><img src="%s"></img></div>' % d['content'][n[0]][n[1]])
 			elif n[1] == 'source':
@@ -73,6 +96,20 @@ class CPLHTML():
 
 		return "\n".join(table)
 
+	def getJavaScript(self):
+		"""returns javascript code"""
+
+		return "\n".join([
+			'<script type= "text/javascript"> ',
+			'function open_window(content) {'
+			"var win = window.open('','headline','width=720,height=500,scrollbars=yes,screenX=400,screenY=200')",
+			'var doc = win.document;',
+			'doc.open("text/html", "replace");',
+			'doc.write(content);',
+			'doc.close();',
+			'}',
+			'</script>'])
+
 	def generateHTML(self):
 		d = self.dictionary
 		model = [
@@ -80,7 +117,7 @@ class CPLHTML():
 			'<HEAD> <meta http-equiv="content-type" content="text/html; charset=utf-8" />'
 			'<TITLE>' + d['content']['newspaper']['title'] + '</TITLE>',
 			'<link rel="stylesheet" type="text/css" href="style.css" media="screen" />',
-			'<script type= "text/javascript"> </script>',
+			self.getJavaScript(),
 			'</HEAD>'
 			'<BODY>',
 			self.getHeader(d),
