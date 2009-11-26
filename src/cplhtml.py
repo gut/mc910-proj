@@ -34,7 +34,7 @@ class CPLHTML():
 	def getNews(self, d, news):
 		result = []
 		for n in news:
-			result.append("<p>")
+			result.append("<br><p>")
 			if n[1] == 'title':
 				if d['content'][n[0]].has_key("text"):
 					result.append('<a href="#" onClick="open_window(\'' + 
