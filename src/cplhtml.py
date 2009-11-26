@@ -34,7 +34,7 @@ class CPLHTML():
 	def getNews(self, d, news):
 		result = []
 		for n in news:
-			result.append("<br><p>")
+			result.append("<p>")
 			if n[1] == 'title':
 				if d['content'][n[0]].has_key("text"):
 					result.append('<a href="#" onClick="open_window(\'' + 
@@ -49,13 +49,13 @@ class CPLHTML():
 			elif n[1] == 'image':
 				result.append('<div id="figura"><img class="escala" src="%s"></img></div>' % d['content'][n[0]].get(n[1], ''))
 			elif n[1] == 'full_image':
-				result.append('<img class="escala" src="%s"></img>' % d['content'][n[0]].get(n[1], ''))
+				result.append('<center><img src="%s"></img></center>' % d['content'][n[0]].get(n[1], ''))
 			elif n[1] == 'source':
-				result.append('<B>Fonte: </B> <a href="%s" target="_blank">%s</a>' % (d['content'][n[0]].get(n[1], ''), d['content'][n[0]].get(n[1])))
+				result.append('<br><B>Fonte: </B> <a href="%s" target="_blank">%s</a>' % (d['content'][n[0]].get(n[1], ''), d['content'][n[0]].get(n[1])))
 			elif n[1] == 'author':
-				result.append('<B>Autor: </B> %s' % d['content'][n[0]].get(n[1], ''))
+				result.append('<br><B>Autor: </B> %s' % d['content'][n[0]].get(n[1], ''))
 			elif n[1] == 'date':
-				result.append('<B>Data: </B> %s' % d['content'][n[0]].get(n[1]))
+				result.append('<br><B>Data: </B> %s' % d['content'][n[0]].get(n[1]))
 			else:
 				result.append(d['content'][n[0]].get(n[1]))
 			result.append("</p>")
