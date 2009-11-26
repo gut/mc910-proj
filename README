@@ -2,12 +2,17 @@ Grupo 18
 061358 - Gustavo Serra Scalet
 063462 - Otávio Busatto Pontes
 
- com uma breve descrição de sua implementação
- Essa descrição deve ter uma página, explicando qual ferramenta você adotou para geração do parser, se você implementou tudo que foi pedido na especificação, e quais extensões e/ou alterações você fez na linguagem.
-
 Usamos para gerar o lexer e parser a ferramenta PLY, que usa a linguagem de programação Python. Implementamos um parser que trata todas as situações ilustradas no exemplo.cpl colocado no site da disciplina, exibindo uma página de notícias semelhante a página colocada no site da disciplina. Fizemos também o parser de algumas formatações de texto seguindo o padrão wiki. 
+Para isso criamos 2 parsers. Um que trata o arquivo cpl, independente da formatação wiki. E outro que trata a formatação wiki em uma string. A vantagem dessa abordagem é que caso se deseje usar o cpl com outro tipo de formatação de textos isso é possível. E o mesmo ocorre se quisermos usar o parser de wiki para alguma outra aplicação. 
 Para exibir a notícia tomamos o seguinte padrão: as notícias são exibidas na ordem que aparecem em structure e são exibidas nas colunas indicadas no colchete do item. Caso a coluna esteja ocupada ou então seja menor que a coluna da notícia anterior, uma nova linha é criada. Quando existe um campo text no content da notícia, criamos um link no título, que abre uma janela, que contém seu o título e text. Criamos uma extensão ao cpl, permitindo que se manipule o conteúdo exibido na janela exibida ao clicar no título. basta iniciar uma declaração com window.noticia.campo. Com isso o campo indicado da noticia é exibido na janela. O arquivo exemplo_completo2.cpl usa esse recurso. Outra extensão é que nosso arquivo cpl não está limitado aos campos indicados no arquivo de exemplo. Qualquer campo pode ser criado e adicionado ao cpl e exbido normalmente no espaço da notícia. Isso pode ser notado também no exemplo_completo2.cpl.
 Outra extensão é a criação do campo full_image. Nesse campo a imagem é exibida em seu tamanho natural e não reduzida ao lado do texto. 
+	
+Executando o Parser:
+Entre na pasta src e rode:
+./cplhtml.py path/nome_arquivo.cpl
+O programa cria um arquivo html chamado path/nome_arquivo.html com o conteúdo gerado. As imagens e estilos css devem estar na mesma pasta que o nome_arquivo.cpl para funcionar.
+Para rodar nosso exemplo rode:
+./cplhtml.py ../files/exemplo_completo2.cpl
 
 Arquivos do projeto
 
