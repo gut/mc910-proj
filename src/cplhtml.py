@@ -2,43 +2,120 @@
 # -*- coding: UTF-8 -*-
 
 class CPLHTML():
-
-
-
+	"""Class used to generate HTML code from a dictonary with information about a cpl file."""
 	def __init__(self, dictionary):
 		self.dictionary = dictionary
 
+	def generateHTML(self):
+		"""Generate HTML from whole webpageL"""
+		d = self.dictionary
+		model = [
+			'<HTML>',
+			'<HEAD> <meta http-equiv="content-type" content="text/html; charset=utf-8" />'
+			'<TITLE>' + d['content']['newspaper']['title'] + '</TITLE>',
+			'<link rel="stylesheet" type="text/css" href="style.css" media="screen" />',
+			self.getJavaScript(),
+			'</HEAD>'
+			'<BODY>',
+			self.getHeader(d),
+			self.getTable(d),
+			'</BODY>',
+			'</HTML>',
+			]
+		return "\n".join(model)
+
+	def getWindowHTML (self, content):
+		"""Gets html from a subwindow"""
+		html = ["<HTML><BODY>",
+			"<HEAD><link rel='stylesheet' type='text/css' href='styleJanelas.css' /></HEAD>",
+			content,
+			"</BODY></HTML>"
+			]
+
+		return self.removeLineBreaksAndSingleQuotes("".join(html))
+
 	def getHeader(self, d):
+		"""Get header of the news website"""
 		s = '<div id="header"><div id="logo"> <h1><a>' + d['content']['newspaper']['title']
 		if d['content']['newspaper'].has_key("date"):
 			s += '</a><p>' + d['content']['newspaper']['date'] + '</p>'
 		s += '</div></h1><div id="separador"></div></div>'
 		return s
 
+	def removeLineBreaksAndSingleQuotes(self, string):
+		"""Replaces \n for \\n and \" for \\' and \' for \\'
+		This avoids string problems"""
+		string = string.replace("\n", "\\n")
+		string = string.replace("'", "\\'")
+		string = string.replace('"', "\\'")
+		return string
+
+	def getTitle(self, n, news): 
+		"""Gets the tag used to print the title of one news headline"""
+		#if there is a field 'text'
+		#or if there is an item window inside this news
+		if d['content'][n[0]].has_key("text") or [i for i in news if i[0] == 'window'] != []: 
+			window_content = []
+			for l in news:
+				if l[0] == 'window':
+					if l[2] == 'title':
+						l2 = 'title_window' #avoid link in a title in a window
+					else:
+						l2 = l[2] 
+					window_content.append(self.getHTMLTagFromNews((l[1],l2), news))
+
+			#if there is no description of window's content
+			#the default form will be used.
+			if window_content == []:
+				window_content.append(self.getHTMLTagFromNews((n[0], 'title_window'), news))
+				window_content.append(self.getHTMLTagFromNews((n[0], 'text'), news))
+			window_content = self.getWindowHTML("".join(window_content))
+			return '<a href="#" onClick="open_window(\'' + window_content + '\')">' + self.getHTMLTagFromNews((n[0], 'title_window'), news) + "</a>"
+		else:
+			return self.getHTMLTagFromNews((n[0], 'title_window'), news)
+
+
+	def getHTMLTagFromNews(self, n, news):
+		"""Get the tag from a news item."""
+		if n[1] == 'title':
+			return "<p>" + self.getTitle(n,news) + '</p>'
+		elif n[1] == 'title_window':
+			return "<p>" + '<H2>%s</H2>' % d['content'][n[0]]['title'] + '</p>'
+		elif n[1] == 'image':
+			return "<p>" + '<div id="figura"><img class="escala" src="%s"></img></div>' % d['content'][n[0]].get(n[1], '') + '</p>'
+		elif n[1] == 'full_image':
+			return "<p>" + '<center><img src="%s"></img></center>' % d['content'][n[0]].get(n[1], '') + '</p>'
+		elif n[1] == 'source':
+			return "<p>" + '<br><B>Fonte: </B> <a href="%s" target="_blank">%s</a>' % (d['content'][n[0]].get(n[1], ''), d['content'][n[0]].get(n[1])) + '</p>'
+		elif n[1] == 'author':
+			return "<p>" + '<br><B>Autor: </B> %s' % d['content'][n[0]].get(n[1], '') + '</p>'
+		elif n[1] == 'date':
+			return "<p>" + '<br><B>Data: </B> %s' % d['content'][n[0]].get(n[1]) + '</p>'
+		else:
+			return "<p>" + d['content'][n[0]].get(n[1]) + '</p>'
+		
+
 	def getNews(self, d, news):
+		"""Get all html used to print a single news"""
 		result = []
 		for n in news:
-			result.append("<p>")
-			if n[1] == 'title':
-				result.append('<H2>%s</H2>' % d['content'][n[0]][n[1]])
-			elif n[1] == 'image':
-				result.append('<div id="figura"><img src="%s"></img></div>' % d['content'][n[0]][n[1]])
-			elif n[1] == 'source':
-				result.append('<B>Fonte: </B> <a href="%s" target="_blank">%s</a>' % (d['content'][n[0]][n[1]], d['content'][n[0]][n[1]]))
-			elif n[1] == 'author':
-				result.append('<B>Autor: </B> %s' % d['content'][n[0]][n[1]])
-			elif n[1] == 'date':
-				result.append('<B>Data: </B> %s' % d['content'][n[0]][n[1]])
-			else:
-				result.append(d['content'][n[0]][n[1]])
-			result.append("</p>")
+			if n[0] == 'window':
+				continue
+
+			result.append(self.getHTMLTagFromNews(n, news))
 		return "\n".join(result)
 
 	def getTable(self, d):
+		"""Returns the table printed in main website"""
 		num_cols = d["structure"]["format"]["col"]
 		current_col = 0
 		table = []
-		table.append('<TABLE cellSpacing=0 cellPadding=8 width="1024" border=1>')
+		table.append('<TABLE cellSpacing=0 cellPadding=8 width="1024" border=0>')
+
+		table.append("<TR>")
+		for i in range(num_cols):
+			table.append("<td width='" + str(100/num_cols) + "%'> </td>")
+		table.append("</TR>")
 
 		table.append("<TR>")
 		#add the news 
@@ -73,22 +150,19 @@ class CPLHTML():
 
 		return "\n".join(table)
 
-	def generateHTML(self):
-		d = self.dictionary
-		model = [
-			'<HTML>',
-			'<HEAD> <meta http-equiv="content-type" content="text/html; charset=utf-8" />'
-			'<TITLE>' + d['content']['newspaper']['title'] + '</TITLE>',
-			'<link rel="stylesheet" type="text/css" href="style.css" media="screen" />',
-			'<script type= "text/javascript"> </script>',
-			'</HEAD>'
-			'<BODY>',
-			self.getHeader(d),
-			self.getTable(d),
-			'</BODY>',
-			'</HTML>',
-			]
-		return "\n".join(model)
+	def getJavaScript(self):
+		"""returns javascript code"""
+
+		return "\n".join([
+			'<script type= "text/javascript"> ',
+			'function open_window(content) {'
+			"var win = window.open('','headline','width=720,height=500,scrollbars=yes,screenX=400,screenY=200')",
+			'var doc = win.document;',
+			'doc.open("text/html", "replace");',
+			'doc.write(content);',
+			'doc.close();',
+			'}',
+			'</script>'])
 
 if __name__ == "__main__":
 	"""Runs a small test with the htmlgenerator"""

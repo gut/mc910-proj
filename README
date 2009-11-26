@@ -1,9 +1,31 @@
-|-- README
+Grupo 18
+061358 - Gustavo Serra Scalet
+063462 - Otávio Busatto Pontes
+
+ com uma breve descrição de sua implementação
+ Essa descrição deve ter uma página, explicando qual ferramenta você adotou para geração do parser, se você implementou tudo que foi pedido na especificação, e quais extensões e/ou alterações você fez na linguagem.
+
+Usamos para gerar o lexer e parser a ferramenta PLY, que usa a linguagem de programação Python. Implementamos um parser que trata todas as situações ilustradas no exemplo.cpl colocado no site da disciplina, exibindo uma página de notícias semelhante a página colocada no site da disciplina. Fizemos também o parser de algumas formatações de texto seguindo o padrão wiki. 
+Para exibir a notícia tomamos o seguinte padrão: as notícias são exibidas na ordem que aparecem em structure e são exibidas nas colunas indicadas no colchete do item. Caso a coluna esteja ocupada ou então seja menor que a coluna da notícia anterior, uma nova linha é criada. Quando existe um campo text no content da notícia, criamos um link no título, que abre uma janela, que contém seu o título e text. Criamos uma extensão ao cpl, permitindo que se manipule o conteúdo exibido na janela exibida ao clicar no título. basta iniciar uma declaração com window.noticia.campo. Com isso o campo indicado da noticia é exibido na janela. O arquivo exemplo_completo2.cpl usa esse recurso. Outra extensão é que nosso arquivo cpl não está limitado aos campos indicados no arquivo de exemplo. Qualquer campo pode ser criado e adicionado ao cpl e exbido normalmente no espaço da notícia. Isso pode ser notado também no exemplo_completo2.cpl.
+
+Arquivos do projeto
+
+|-- README           # Esse informativo
 |-- files            # arquivos gerais
-|   |-- calc.py      # exemplo
-|   |-- ex.cpl       # arquivo de entrada para testes
 |   |-- exemplo.cpl  # Arquivo de entrada dado pelo professor
+|   |-- exemplo_completo.cpl #outros exemplos
+|   |-- exemplo_completo2.cpl
+|   |-- helio.jpg #Arquivos uteis
+|   |-- sergio.jpg
+|   |-- style.css
+|   |-- styleJanelas.css
+|   |-- virada.jpg
+|   `-- xuxa.jpg
 `-- src
-   |-- cpllexer.py   # Lexer
-   |-- cplparser.py  # parser(análise sintática - gramatica)
-   |-- gramatica     # arquivo descrevendo a gramatica (só um esboço, não é usado no código)
+    |-- color.py        # Auxliar para colorir saida no terminal
+    |-- cplhtml.py      # Converte o dicionario gerado pelo parser em codigo html
+    |-- cpllexer.py     # Lexer
+    |-- cplparser.py    # parser
+    |-- stringhtml.py   # Converte o dicionario gerado pelo stringparser em html
+    |-- stringlexer.py  # Lexer de string. Segue os padroes de wiki para formatação de texto
+    |-- stringparser.py # Parser de string. 

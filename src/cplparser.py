@@ -10,7 +10,6 @@ class CPLParser():
 		self.tokens = lexer.tokens
 
 	def p_statement_assign(self, t):
-		#'statement : BEGIN content_s structure_s END'
 		"""statement : BEGIN content_s structure_s END"""
 		t[0] = {'content' : t[2], 'structure' : t[3]}
 	
@@ -26,7 +25,6 @@ class CPLParser():
 	def p_item_list(self,t):
 		'item_list : item_s item_list'
 		t[0] = [t[1]] + t[2]
-#		t[0].append(t[1])
 	
 	def p_item_list2(self,t):
 		'item_list : item_s'
@@ -39,12 +37,18 @@ class CPLParser():
 		t[0]['item_content'] = t[4]
 
 	def p_item_content_list(self,t):
-		'item_content_list : item_content_s item_content_list'
+		'''item_content_list : item_content_s item_content_list
+				| item_content_window_s item_content_list'''
 		t[0] = [t[1]] + t[2]
 
 	def p_item_content_list2(self, t):
-		'item_content_list : item_content_s'
+		'''item_content_list : item_content_s
+			| item_content_window_s'''
 		t[0] = [t[1]]
+
+	def p_item_content_window_s (self, t):
+		"item_content_window_s : ID '.' ID '.' ID"
+		t[0] = (t[1], t[3], t[5])
 
 	def p_item_content_s(self, t):
 		"item_content_s : ID '.' ID"
@@ -110,7 +114,7 @@ class CPLParser():
 		'string_s : STRING'
 		t[0] = t[1]
 
-
+	#build a Parser
 	def build(self, **kwargs):
 		self.parser = yacc.yacc(module=self, **kwargs)
 
