@@ -13,7 +13,7 @@ class StringParser():
 		'''main : recuo main
 			| title main
 			| string_s main'''
-		t[0] = t[1] + t[2]
+		t[0] = (t[1], t[2])
 	
 	def p_main_null(self, t):
 		'''main : STRING
@@ -23,7 +23,7 @@ class StringParser():
 
 	def p_recuo_def(self, t):
 		'recuo : RECUO string_s'
-		t[0] = {'size' : t[1], 'string' : t[2]}
+		t[0] = {'type' : 'recuo', 'size' : t[1], 'string' : t[2]}
 
 	def p_title_def(self, t):
 		'title : TITLE string_s TITLE'
@@ -82,8 +82,5 @@ if __name__ == "__main__":
 	stringparser.build()
 	d = stringparser.parser.parse(sys.argv[1])
 	if d:
-		print yellow('Content')
-		print printDictList(d['content'], color = white)
-		print yellow('Structure')
-		print printDictList(d['structure'], color = white)
+		print printDictList(d, color = white)
 
