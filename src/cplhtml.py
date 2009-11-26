@@ -47,17 +47,17 @@ class CPLHTML():
 				if d['content'][n[0]].has_key("text"):
 					result.append("</a>")
 			elif n[1] == 'image':
-				result.append('<div id="figura"><img class="escala" src="%s"></img></div>' % d['content'][n[0]][n[1]])
+				result.append('<div id="figura"><img class="escala" src="%s"></img></div>' % d['content'][n[0]].get(n[1], ''))
 			elif n[1] == 'full_image':
-				result.append('<img class="escala" src="%s"></img>' % d['content'][n[0]][n[1]])
+				result.append('<img class="escala" src="%s"></img>' % d['content'][n[0]].get(n[1], ''))
 			elif n[1] == 'source':
-				result.append('<B>Fonte: </B> <a href="%s" target="_blank">%s</a>' % (d['content'][n[0]][n[1]], d['content'][n[0]][n[1]]))
+				result.append('<B>Fonte: </B> <a href="%s" target="_blank">%s</a>' % (d['content'][n[0]].get(n[1], ''), d['content'][n[0]].get(n[1])))
 			elif n[1] == 'author':
-				result.append('<B>Autor: </B> %s' % d['content'][n[0]][n[1]])
+				result.append('<B>Autor: </B> %s' % d['content'][n[0]].get(n[1], ''))
 			elif n[1] == 'date':
-				result.append('<B>Data: </B> %s' % d['content'][n[0]][n[1]])
+				result.append('<B>Data: </B> %s' % d['content'][n[0]].get(n[1]))
 			else:
-				result.append(d['content'][n[0]][n[1]])
+				result.append(d['content'][n[0]].get(n[1]))
 			result.append("</p>")
 		return "\n".join(result)
 
