@@ -2,24 +2,30 @@
 # -*- coding: UTF-8 -*-
 
 class CPLHTML():
-
+	"""Class used to generate HTML code from a dictonary with information about a cpl file."""
 	def __init__(self, dictionary):
 		self.dictionary = dictionary
 
-	def getHeader(self, d):
-		s = '<div id="header"><div id="logo"> <h1><a>' + d['content']['newspaper']['title']
-		if d['content']['newspaper'].has_key("date"):
-			s += '</a><p>' + d['content']['newspaper']['date'] + '</p>'
-		s += '</div></h1><div id="separador"></div></div>'
-		return s
-
-	def removeLineBreaksAndSingleQuotes(self, string):
-		string = string.replace("\n", "\\n")
-		string = string.replace("'", "\\'")
-		string = string.replace('"', "\\'")
-		return string
+	def generateHTML(self):
+		"""Generate HTML from whole webpageL"""
+		d = self.dictionary
+		model = [
+			'<HTML>',
+			'<HEAD> <meta http-equiv="content-type" content="text/html; charset=utf-8" />'
+			'<TITLE>' + d['content']['newspaper']['title'] + '</TITLE>',
+			'<link rel="stylesheet" type="text/css" href="style.css" media="screen" />',
+			self.getJavaScript(),
+			'</HEAD>'
+			'<BODY>',
+			self.getHeader(d),
+			self.getTable(d),
+			'</BODY>',
+			'</HTML>',
+			]
+		return "\n".join(model)
 
 	def getWindowHTML (self, content):
+		"""Gets html from a subwindow"""
 		html = ["<HTML><BODY>",
 			"<HEAD><link rel='stylesheet' type='text/css' href='styleJanelas.css' /></HEAD>",
 			content,
@@ -28,7 +34,24 @@ class CPLHTML():
 
 		return self.removeLineBreaksAndSingleQuotes("".join(html))
 
+	def getHeader(self, d):
+		"""Get header of the news website"""
+		s = '<div id="header"><div id="logo"> <h1><a>' + d['content']['newspaper']['title']
+		if d['content']['newspaper'].has_key("date"):
+			s += '</a><p>' + d['content']['newspaper']['date'] + '</p>'
+		s += '</div></h1><div id="separador"></div></div>'
+		return s
+
+	def removeLineBreaksAndSingleQuotes(self, string):
+		"""Replaces \n for \\n and \" for \\' and \' for \\'
+		This avoids string problems"""
+		string = string.replace("\n", "\\n")
+		string = string.replace("'", "\\'")
+		string = string.replace('"', "\\'")
+		return string
+
 	def getTitle(self, n, news): 
+		"""Gets the tag used to print the title of one news headline"""
 		#if there is a field 'text'
 		#or if there is an item window inside this news
 		if d['content'][n[0]].has_key("text") or [i for i in news if i[0] == 'window'] != []: 
@@ -53,6 +76,7 @@ class CPLHTML():
 
 
 	def getHTMLTagFromNews(self, n, news):
+		"""Get the tag from a news item."""
 		if n[1] == 'title':
 			return "<p>" + self.getTitle(n,news) + '</p>'
 		elif n[1] == 'title_window':
@@ -72,6 +96,7 @@ class CPLHTML():
 		
 
 	def getNews(self, d, news):
+		"""Get all html used to print a single news"""
 		result = []
 		for n in news:
 			if n[0] == 'window':
@@ -81,6 +106,7 @@ class CPLHTML():
 		return "\n".join(result)
 
 	def getTable(self, d):
+		"""Returns the table printed in main website"""
 		num_cols = d["structure"]["format"]["col"]
 		current_col = 0
 		table = []
@@ -137,23 +163,6 @@ class CPLHTML():
 			'doc.close();',
 			'}',
 			'</script>'])
-
-	def generateHTML(self):
-		d = self.dictionary
-		model = [
-			'<HTML>',
-			'<HEAD> <meta http-equiv="content-type" content="text/html; charset=utf-8" />'
-			'<TITLE>' + d['content']['newspaper']['title'] + '</TITLE>',
-			'<link rel="stylesheet" type="text/css" href="style.css" media="screen" />',
-			self.getJavaScript(),
-			'</HEAD>'
-			'<BODY>',
-			self.getHeader(d),
-			self.getTable(d),
-			'</BODY>',
-			'</HTML>',
-			]
-		return "\n".join(model)
 
 if __name__ == "__main__":
 	"""Runs a small test with the htmlgenerator"""
