@@ -47,7 +47,7 @@ class CPLHTML():
 				if d['content'][n[0]].has_key("text"):
 					result.append("</a>")
 			elif n[1] == 'image':
-				result.append('<div id="figura"><img src="%s"></img></div>' % d['content'][n[0]][n[1]])
+				result.append('<div id="figura"><img class="escala" src="%s"></img></div>' % d['content'][n[0]][n[1]])
 			elif n[1] == 'source':
 				result.append('<B>Fonte: </B> <a href="%s" target="_blank">%s</a>' % (d['content'][n[0]][n[1]], d['content'][n[0]][n[1]]))
 			elif n[1] == 'author':
