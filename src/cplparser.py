@@ -110,7 +110,7 @@ class CPLParser():
 		'string_s : STRING'
 		t[0] = t[1]
 
-
+	#build a Parser
 	def build(self, **kwargs):
 		self.parser = yacc.yacc(module=self, **kwargs)
 
