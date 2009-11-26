@@ -66,6 +66,11 @@ class CPLHTML():
 		table.append('<TABLE cellSpacing=0 cellPadding=8 width="1024" border=1>')
 
 		table.append("<TR>")
+		for i in range(num_cols):
+			table.append("<td width='" + str(100/num_cols) + "%'> </td>")
+		table.append("</TR>")
+
+		table.append("<TR>")
 		#add the news 
 		#rethink the way we arrange columns
 		for news in d["structure"]["items"]:
