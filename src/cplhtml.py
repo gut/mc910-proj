@@ -189,13 +189,13 @@ if __name__ == "__main__":
 	else:
 		cplhtml = CPLHTML(d)
 	
-	absolute_cpl_file_path = os.path.realpath(sys.argv[1])
-	absolute_file_root = '.'.join(absolute_cpl_file_path.split('.')[:-1])  # removing extension
-	html_file = '%s.html' % absolute_file_root
-	handle = open(html_file, 'w')
-	handle.write(cplhtml.generateHTML())
-	handle.close()
+		absolute_cpl_file_path = os.path.realpath(sys.argv[1])
+		absolute_file_root = '.'.join(absolute_cpl_file_path.split('.')[:-1])  # removing extension
+		html_file = '%s.html' % absolute_file_root
+		handle = open(html_file, 'w')
+		handle.write(cplhtml.generateHTML())
+		handle.close()
 
-	print 'Html file saved on "%s"' % html_file
+		print 'Html file saved on "%s"' % html_file
 
 
