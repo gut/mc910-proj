@@ -13,21 +13,22 @@ class StringParser():
 		'''main : recuo main
 			| title main
 			| string_s main'''
-		t[0] = (t[1], t[2])
+		t[0] = [t[1],] + t[2]
 	
 	def p_main_null(self, t):
 		'''main : STRING
 			| title
 			| recuo'''
-		t[0] = t[1]
+		t[0] = [t[1],]
 
 	def p_recuo_def(self, t):
 		'recuo : RECUO string_s'
 		t[0] = {'type' : 'recuo', 'size' : t[1], 'string' : t[2]}
 
 	def p_title_def(self, t):
-		'title : TITLE string_s TITLE'
-		t[0] = {'size' : t[1], 'string' : t[2]}
+		'title : TITLE_BEGIN string_s TITLE_END'
+		print 'O'
+		t[0] = {'type' : 'title', 'size' : t[1], 'string' : t[2]}
 
 	def p_string_statement(self, t):
 		"string_s : STRING string_s"
@@ -36,6 +37,9 @@ class StringParser():
 	def p_string_def(self, t):
 		'string_s : STRING'
 		t[0] = t[1]
+
+	def p_error(self, t):
+		print "Syntax error at '%s'" % t.value
 
 
 	def build(self, **kwargs):

@@ -116,7 +116,7 @@ class CPLParser():
 		t[0] = t[1]
 
 	def p_error(self, t):
-    		print "Syntax error at '%s'" % t.value
+		print "Syntax error at '%s'" % t.value
 
 	#build a Parser
 	def build(self, **kwargs):
