@@ -1,5 +1,3 @@
 O content suporta receber 2 newspaper
 Nao funciona com o content e o structure fora de ordem.
 content, newspaper, title  é obrigatório
-
-No lexer de strings tem token indo dentro da STRING (Teste '== título ==')
