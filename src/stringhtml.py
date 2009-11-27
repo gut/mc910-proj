@@ -24,6 +24,8 @@ class StringHTML():
 						model.append(s)
 					elif elem['type'] == 'title':
 						model.append('<h%(size)s>%(string)s</h%(size)s>' % elem)
+					elif elem['type'] == 'link':
+						model.append('<a href="%(href)s">%(string)s</a>' % elem)
 
 		return "\n".join(model)
 

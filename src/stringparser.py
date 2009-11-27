@@ -19,12 +19,17 @@ class StringParser():
 
 	def p_string_def3(self, t):
 		'''main2 : recuo
+			| link
 			| string_s'''
 		t[0] = [t[1],]
 
 	def p_recuo_def(self, t):
 		'recuo : RECUO string_s'
 		t[0] = {'type' : 'recuo', 'size' : t[1], 'string' : t[2]}
+	
+	def p_link_def(self, t):
+		'link : LINK_BEGIN string_s LINK_DELIMITER string_s LINK_END'
+		t[0] = {'type' : 'link', 'href' : t[2], 'string' : t[4]}
 
 	def p_string_statement(self, t):
 		"string_s : STRING string_s"

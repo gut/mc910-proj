@@ -9,7 +9,14 @@ class StringLexer():
 	tokens = [
 		'RECUO',
 		'STRING',
+		'LINK_BEGIN',
+		'LINK_DELIMITER',
+		'LINK_END',
 	]
+
+	t_LINK_BEGIN = r'\[ '
+	t_LINK_DELIMITER = r' \| '
+	t_LINK_END = r' \]'
 
 	def t_RECUO(self, t):
 		r'[:]+'
