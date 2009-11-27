@@ -27,7 +27,6 @@ class StringParser():
 
 	def p_title_def(self, t):
 		'title : TITLE_BEGIN string_s TITLE_END'
-		print 'O'
 		t[0] = {'type' : 'title', 'size' : t[1], 'string' : t[2]}
 
 	def p_string_statement(self, t):
