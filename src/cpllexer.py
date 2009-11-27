@@ -2,16 +2,11 @@
 # -*- coding: UTF-8 -*-
 
 import ply.lex as lex
-_enable_string_parsing = False
+_enable_string_parsing = True
 if _enable_string_parsing:
 	from stringlexer import StringLexer
 	from stringparser import StringParser
 	from stringhtml import StringHTML
-
-	stringlexer = StringLexer()
-	stringlexer.build()
-	stringparser = StringParser(stringlexer)
-	stringparser.build()
 
 class CPLLexer():
 
@@ -81,6 +76,10 @@ class CPLLexer():
 	def t_FORMATEDTEXT_STRING(self, t):
 		u'([^{}\n])+'
 		if _enable_string_parsing:
+			stringlexer = StringLexer()
+			stringlexer.build()
+			stringparser = StringParser(stringlexer)
+			stringparser.build()
 			d = stringparser.parser.parse(t.value.strip())
 			stringhtml = StringHTML(d)
 			t.value = stringhtml.generateHTML()
