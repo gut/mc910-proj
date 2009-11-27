@@ -14,13 +14,16 @@ class StringHTML():
 		model = []
 		for elem in d:
 			value = d[elem]
-			if elem == 'recuo':
-				s = value['string']
-				for i in range(value['size']):
-					s = self.recuar(s)
+			if type(value) is str:
 				model.append(s)
-			elif elem == 'title':
-				model.append('<h%(size)s>%(string)s</h%(size)s>' % value)
+			elif type(elem) is dict:
+				if elem['type'] == 'recuo':
+					s = value['string']
+					for i in range(value['size']):
+						s = self.recuar(s)
+					model.append(s)
+				elif elem['type'] == 'title':
+					model.append('<h%(size)s>%(string)s</h%(size)s>' % value)
 
 		return "\n".join(model)
 

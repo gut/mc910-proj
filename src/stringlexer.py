@@ -8,7 +8,8 @@ class StringLexer():
 	#Tokens parsed by this lexer
 	tokens = [
 		'RECUO',
-		'TITLE',
+		'TITLE_BEGIN',
+		'TITLE_END',
 		'STRING',
 	]
 
@@ -19,13 +20,18 @@ class StringLexer():
 		t.value = len(t.value)
 		return t
 
-	def t_TITLE(self, t):
-		r'[=]+'
+	def t_TITLE_BEGIN(self, t):
+		r'^[=]+ '
+		t.value = len(t.value)
+		return t
+
+	def t_TITLE_END(self, t):
+		r' [=]+'
 		t.value = len(t.value)
 		return t
 
 	def t_STRING(self, t):
-		u'([^\n=])+'
+		u'([^=])+'
 		t.value = t.value.strip()
 		return t
 
