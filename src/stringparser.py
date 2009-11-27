@@ -9,25 +9,22 @@ class StringParser():
 		self.lex = lexer.lexer
 		self.tokens = lexer.tokens
 
-	def p_string_main(self, t):
-		'''main : recuo main
-			| title main
-			| string_s main'''
+	def p_string_de(self, t):
+		'''main : main2'''
+		t[0] = [t[1],]
+
+	def p_string_def2(self, t):
+		'''main : main2 main'''
 		t[0] = [t[1],] + t[2]
-	
-	def p_main_null(self, t):
-		'''main : recuo
-			| title
+
+	def p_string_def3(self, t):
+		'''main2 : recuo
 			| string_s'''
 		t[0] = [t[1],]
 
 	def p_recuo_def(self, t):
 		'recuo : RECUO string_s'
 		t[0] = {'type' : 'recuo', 'size' : t[1], 'string' : t[2]}
-
-	def p_title_def(self, t):
-		'title : TITLE_BEGIN string_s TITLE_END'
-		t[0] = {'type' : 'title', 'size' : t[1], 'string' : t[2]}
 
 	def p_string_statement(self, t):
 		"string_s : STRING string_s"
