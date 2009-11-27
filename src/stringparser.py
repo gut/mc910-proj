@@ -19,12 +19,18 @@ class StringParser():
 
 	def p_string_def3(self, t):
 		'''main2 : recuo
-			| string_s'''
+			| string_s
+			| title'''
 		t[0] = [t[1],]
 
 	def p_recuo_def(self, t):
 		'recuo : RECUO string_s'
 		t[0] = {'type' : 'recuo', 'size' : t[1], 'string' : t[2]}
+
+	
+	def p_title_def(self, t):
+		'title : TITLE STRING TITLE'
+		t[0] = {'type' : 'title', 'size' : t[1], 'string' : t[2]}
 
 	def p_string_statement(self, t):
 		"string_s : STRING string_s"
