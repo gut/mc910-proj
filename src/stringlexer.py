@@ -30,7 +30,7 @@ class StringLexer():
 		return t
 
 	def t_STRING(self, t):
-		u'([^\n=])+'
+		u'([^\n[|\]=])+'
 		t.value = t.value.strip()
 		return t
 
