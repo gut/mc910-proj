@@ -16,9 +16,9 @@ class StringParser():
 		t[0] = [t[1],] + t[2]
 	
 	def p_main_null(self, t):
-		'''main : STRING
+		'''main : recuo
 			| title
-			| recuo'''
+			| string_s'''
 		t[0] = [t[1],]
 
 	def p_recuo_def(self, t):

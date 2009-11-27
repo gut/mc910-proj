@@ -13,8 +13,6 @@ class StringLexer():
 		'STRING',
 	]
 
-	#literals used in cpl
-
 	def t_RECUO(self, t):
 		r'[:]+'
 		t.value = len(t.value)
