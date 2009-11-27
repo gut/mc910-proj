@@ -10,7 +10,8 @@ class CPLParser():
 		self.tokens = lexer.tokens
 
 	def p_statement_assign(self, t):
-		"""statement : BEGIN content_s structure_s END"""
+		"""statement : BEGIN content_s structure_s END
+			| COMMENT""" #just to avoid warning
 		t[0] = {'content' : t[2], 'structure' : t[3]}
 	
 	def p_structure_statement(self, t):
@@ -113,6 +114,9 @@ class CPLParser():
 	def p_string_def(self, t):
 		'string_s : STRING'
 		t[0] = t[1]
+
+	def p_error(self, t):
+    		print "Syntax error at '%s'" % t.value
 
 	#build a Parser
 	def build(self, **kwargs):
