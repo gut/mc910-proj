@@ -12,18 +12,18 @@ class StringHTML():
 	def generateHTML(self):
 		d = self.dictionary
 		model = []
-		for elem in d:
-			value = d[elem]
-			if type(value) is str:
-				model.append(s)
-			elif type(elem) is dict:
-				if elem['type'] == 'recuo':
-					s = value['string']
-					for i in range(value['size']):
-						s = self.recuar(s)
-					model.append(s)
-				elif elem['type'] == 'title':
-					model.append('<h%(size)s>%(string)s</h%(size)s>' % value)
+		for l in d:
+			for elem in l:
+				if type(elem) is str:
+					model.append(elem)
+				elif type(elem) is dict:
+					if elem['type'] == 'recuo':
+						s = elem['string']
+						for i in range(elem['size']):
+							s = self.recuar(s)
+						model.append(s)
+					elif elem['type'] == 'title':
+						model.append('<h%(size)s>%(string)s</h%(size)s>' % elem)
 
 		return "\n".join(model)
 
